@@ -167,5 +167,13 @@ def clean():
     """Clean all configuration (with confirmation)"""
     migration_manager.clean_configuration()
 
+def main():
+    """Main entry point for the CLI"""
+    try:
+        cli()
+    except Exception as e:
+        console.print(f"[red]Error: {str(e)}[/red]")
+        raise click.Abort()
+
 if __name__ == "__main__":
-    cli()
+    main()
