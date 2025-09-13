@@ -141,13 +141,37 @@ python3 -m pip install --upgrade pip || {
     exit 1
 }
 
+# Ensure package structure is correct
+echo -e "${GREEN}Verifying package structure...${NC}"
+if [ -d "src" ]; then
+    echo -e "${YELLOW}Moving files to correct package structure...${NC}"
+    mkdir -p cybexdump
+    cp -r src/* cybexdump/
+    rm -rf src
+fi
+
+# Fix permissions
+chmod -R 755 cybexdump
+
 # Install the package
 echo -e "${GREEN}Installing CybexDump...${NC}"
 # First try to uninstall any existing installation
 python3 -m pip uninstall -y cybexdump 2>/dev/null || true
-# Install the package in editable mode
-python3 -m pip install -e . || {
+
+# Install the package in development mode
+PYTHONPATH=$PWD python3 -m pip install -e . || {
     echo -e "${RED}Failed to install CybexDump.${NC}"
+    exit 1
+}
+
+# Verify installation
+echo -e "${GREEN}Verifying installation...${NC}"
+python3 -c "from cybexdump.cli import cli" || {
+    echo -e "${RED}Installation verification failed. Could not import cybexdump.${NC}"
+    echo -e "${YELLOW}Current package contents:${NC}"
+    ls -R cybexdump/
+    echo -e "${YELLOW}Python path:${NC}"
+    python3 -c "import sys; print('\n'.join(sys.path))"
     exit 1
 }
 
