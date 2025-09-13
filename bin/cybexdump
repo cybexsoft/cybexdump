@@ -1,0 +1,43 @@
+#!/usr/bin/env python3
+"""
+CybexDump CLI Launcher
+"""
+import os
+import sys
+
+def find_package_root():
+    """Find the root directory of the package"""
+    # Start from this script's directory
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    
+    # Look for the cybexdump package
+    while current_dir != '/':
+        if os.path.exists(os.path.join(current_dir, 'cybexdump', '__init__.py')):
+            return current_dir
+        current_dir = os.path.dirname(current_dir)
+    
+    raise ImportError("Could not find cybexdump package")
+
+def main():
+    """Main entry point"""
+    try:
+        # Find and add package root to Python path
+        package_root = find_package_root()
+        sys.path.insert(0, package_root)
+        
+        # Now we can import our package
+        from cybexdump.cli import cli
+        cli()
+        
+    except ImportError as e:
+        print(f"Error: {str(e)}")
+        print("Debug information:")
+        print(f"Python path: {sys.path}")
+        print(f"Current directory: {os.getcwd()}")
+        sys.exit(1)
+    except Exception as e:
+        print(f"Error: {str(e)}")
+        sys.exit(1)
+
+if __name__ == '__main__':
+    main()
