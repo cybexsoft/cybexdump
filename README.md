@@ -1,7 +1,7 @@
 # CybexDump - Enterprise Database Backup Solution
 
 <div align="center">
-    <img src="https://cybexsoft.com/logo.png" alt="Cybexsoft Logo" width="200"/>
+    <img src="https://cybexsoft.com/img/logo.png" alt="Cybexsoft Logo" width="200"/>
     <h3>A Product by Cybexsoft Consultancy Services</h3>
     <p><a href="https://cybexsoft.com">cybexsoft.com</a></p>
 </div>
@@ -15,7 +15,7 @@
 Install CybexDump with a single command:
 
 ```bash
-curl https://cybexsoft.com/cybexdump/install.sh | bash
+curl https://raw.githubusercontent.com/cybexsoft/cybexdump/refs/heads/main/install.sh | bash
 ```
 
 ## 🎯 Features

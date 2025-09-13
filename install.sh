@@ -16,9 +16,14 @@ fi
 
 # Check Python version
 PYTHON_VERSION=$(python3 -c 'import sys; print(".".join(map(str, sys.version_info[:2])))')
-if (( $(echo "$PYTHON_VERSION < 3.7" | bc -l) )); then
+PYTHON_MAJOR=$(echo "$PYTHON_VERSION" | cut -d. -f1)
+PYTHON_MINOR=$(echo "$PYTHON_VERSION" | cut -d. -f2)
+
+if [ "$PYTHON_MAJOR" -lt 3 ] || { [ "$PYTHON_MAJOR" -eq 3 ] && [ "$PYTHON_MINOR" -lt 7 ]; }; then
     echo -e "${RED}Python 3.7 or higher is required. Current version: $PYTHON_VERSION${NC}"
     exit 1
+else
+    echo -e "${GREEN}Python version $PYTHON_VERSION detected - OK${NC}"
 fi
 
 # Check if pip is installed
