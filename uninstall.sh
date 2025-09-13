@@ -14,7 +14,6 @@ trap 'printf "${RED}An error occurred during uninstallation. Please check the er
 
 printf "${YELLOW}This will uninstall CybexDump and remove all configurations.${NC}\n"
 read -p "Are you sure you want to continue? [y/N] " -n 1 -r
-printf "\n"
 
 if [[ ! $REPLY =~ ^[Yy]$ ]]; then
     printf "${GREEN}Uninstall cancelled.${NC}\n"
