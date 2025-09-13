@@ -15,7 +15,8 @@ setup(
     ],
     entry_points={
         "console_scripts": [
-            "cybexdump=src.cli:cli",
+            "cybexdump=cybexdump:cli",
         ],
     },
+    python_requires=">=3.7",
 )

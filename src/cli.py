@@ -4,10 +4,10 @@ import os
 from pathlib import Path
 from rich.console import Console
 from rich.prompt import Prompt, Confirm
-from .config_manager import ConfigManager
-from .scheduler import BackupScheduler
-from .database_manager import DatabaseManager
-from .migration_manager import MigrationManager
+from cybexdump.config_manager import ConfigManager
+from cybexdump.scheduler import BackupScheduler
+from cybexdump.database_manager import DatabaseManager
+from cybexdump.migration_manager import MigrationManager
 
 console = Console()
 config_manager = ConfigManager()

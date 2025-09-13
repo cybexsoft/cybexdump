@@ -135,10 +135,19 @@ python3 -m pip install --upgrade pip || {
 
 # Install the package
 echo -e "${GREEN}Installing CybexDump...${NC}"
+# First try to uninstall any existing installation
+python3 -m pip uninstall -y cybexdump 2>/dev/null || true
+# Install the package in editable mode
 python3 -m pip install -e . || {
     echo -e "${RED}Failed to install CybexDump.${NC}"
     exit 1
 }
+
+# Verify installation
+if ! command -v cybexdump >/dev/null 2>&1; then
+    echo -e "${RED}Installation verification failed. The cybexdump command is not available.${NC}"
+    exit 1
+fi
 
 # Create configuration directory
 mkdir -p ~/.cybexdump
