@@ -26,12 +26,20 @@ else
     echo -e "${GREEN}Python version $PYTHON_VERSION detected - OK${NC}"
 fi
 
-# Check if pip is installed
-if ! command -v pip3 &> /dev/null; then
-    echo -e "${YELLOW}Installing pip...${NC}"
-    curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-    python3 get-pip.py --user
-    rm get-pip.py
+# Check for required packages
+echo -e "${YELLOW}Checking required packages...${NC}"
+if ! command -v python3-venv &> /dev/null; then
+    case $OS in
+        "Ubuntu"|"Debian")
+            echo -e "${YELLOW}Installing python3-venv...${NC}"
+            sudo apt-get update
+            sudo apt-get install -y python3-venv python3-full
+            ;;
+        "CentOS"|"Red Hat"|"Fedora")
+            echo -e "${YELLOW}Installing python3-venv...${NC}"
+            sudo yum install -y python3-venv
+            ;;
+    esac
 fi
 
 # Create temporary directory
@@ -40,11 +48,25 @@ cd $TMP_DIR
 
 # Clone the repository or download the package
 echo -e "${GREEN}Downloading CybexDump...${NC}"
-curl -L https://github.com/yourusername/cybexdump/archive/main.tar.gz -o cybexdump.tar.gz
+curl -L https://github.com/cybexsoft/cybexdump/archive/refs/heads/main.tar.gz -o cybexdump.tar.gz
+if [ $? -ne 0 ]; then
+    echo -e "${RED}Failed to download CybexDump. Please check your internet connection.${NC}"
+    exit 1
+fi
+
+# Extract the package
+echo -e "${GREEN}Extracting package...${NC}"
 tar xzf cybexdump.tar.gz
+if [ $? -ne 0 ]; then
+    echo -e "${RED}Failed to extract package. The download might be corrupted.${NC}"
+    exit 1
+fi
 
 # Navigate to the package directory
-cd cybexdump-main
+cd cybexdump-main || {
+    echo -e "${RED}Failed to find package directory.${NC}"
+    exit 1
+}
 
 # Install required system packages
 echo -e "${GREEN}Checking system requirements...${NC}"
@@ -90,17 +112,33 @@ case $OS in
         ;;
 esac
 
-# Create virtual environment
+# Create and activate virtual environment
 echo -e "${GREEN}Creating virtual environment...${NC}"
-python3 -m venv ~/.cybexdump-env
+python3 -m venv ~/.cybexdump-env || {
+    echo -e "${RED}Failed to create virtual environment. Please ensure python3-venv is installed.${NC}"
+    exit 1
+}
 
 # Activate virtual environment
-source ~/.cybexdump-env/bin/activate
+echo -e "${GREEN}Activating virtual environment...${NC}"
+source ~/.cybexdump-env/bin/activate || {
+    echo -e "${RED}Failed to activate virtual environment.${NC}"
+    exit 1
+}
 
 # Install Python dependencies
 echo -e "${GREEN}Installing Python dependencies...${NC}"
-pip install --upgrade pip
-pip install -e .
+python3 -m pip install --upgrade pip || {
+    echo -e "${RED}Failed to upgrade pip.${NC}"
+    exit 1
+}
+
+# Install the package
+echo -e "${GREEN}Installing CybexDump...${NC}"
+python3 -m pip install -e . || {
+    echo -e "${RED}Failed to install CybexDump.${NC}"
+    exit 1
+}
 
 # Create configuration directory
 mkdir -p ~/.cybexdump
