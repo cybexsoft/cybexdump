@@ -10,14 +10,14 @@ YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
 # Error handler
-trap 'echo -e "${RED}An error occurred during uninstallation. Please check the error message above.${NC}"' ERR
+trap 'printf "${RED}An error occurred during uninstallation. Please check the error message above.${NC}\n"' ERR
 
-echo -e "${YELLOW}This will uninstall CybexDump and remove all configurations.${NC}"
+printf "${YELLOW}This will uninstall CybexDump and remove all configurations.${NC}\n"
 read -p "Are you sure you want to continue? [y/N] " -n 1 -r
-echo -e "\n"
-if [[ ! $REPLY =~ ^[Yy]$ ]]
-then
-    echo -e "${GREEN}Uninstall cancelled.${NC}"
+printf "\n"
+
+if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+    printf "${GREEN}Uninstall cancelled.${NC}\n"
     exit 1
 fi
 
@@ -69,5 +69,5 @@ if [ -d ~/.cache/pip ]; then
     rm -rf ~/.cache/pip/cybexdump* 2>/dev/null || true
 fi
 
-echo -e "${GREEN}CybexDump has been successfully uninstalled!${NC}"
-echo -e "${YELLOW}Please restart your shell for changes to take effect.${NC}"
+printf "${GREEN}CybexDump has been successfully uninstalled!${NC}\n"
+printf "${YELLOW}Please restart your shell for changes to take effect.${NC}\n"

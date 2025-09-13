@@ -15,7 +15,7 @@
 Install CybexDump with a single command:
 
 ```bash
-curl https://raw.githubusercontent.com/cybexsoft/cybexdump/refs/heads/main/install.sh | bash
+curl -L https://raw.githubusercontent.com/cybexsoft/cybexdump/main/install.sh | bash
 ```
 
 ## 🎯 Features
@@ -92,7 +92,7 @@ cybexdump clean
 Keep CybexDump up to date:
 
 ```bash
-curl https://cybexsoft.com/cybexdump/update.sh | bash
+curl -L https://raw.githubusercontent.com/cybexsoft/cybexdump/main/update.sh | bash
 ```
 
 ## 🗑️ Uninstallation
@@ -100,7 +100,7 @@ curl https://cybexsoft.com/cybexdump/update.sh | bash
 If needed, uninstall CybexDump:
 
 ```bash
-curl https://cybexsoft.com/cybexdump/uninstall.sh | bash
+curl -L https://raw.githubusercontent.com/cybexsoft/cybexdump/main/uninstall.sh | bash
 ```
 
 ## 📚 Documentation
