@@ -1,4 +1,4 @@
-from python_crontab import CronTab
+from crontab import CronTab
 from datetime import datetime, timedelta
 import schedule
 import time

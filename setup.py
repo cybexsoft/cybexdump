@@ -27,7 +27,7 @@ setup(
         "mysql-connector-python",
         "rich",
         "schedule",
-        "python-crontab",
+        "python-crontab",  # installs as 'crontab'
         "python-dotenv",
     ],
     entry_points={

@@ -141,6 +141,19 @@ python3 -m pip install --upgrade pip || {
     exit 1
 }
 
+# Install core dependencies first
+echo -e "${GREEN}Installing core dependencies...${NC}"
+python3 -m pip install \
+    'click' \
+    'mysql-connector-python' \
+    'rich' \
+    'schedule' \
+    'python-crontab' \
+    'python-dotenv' || {
+    echo -e "${RED}Failed to install core dependencies.${NC}"
+    exit 1
+}
+
 # Ensure package structure is correct
 echo -e "${GREEN}Verifying package structure...${NC}"
 if [ -d "src" ]; then
