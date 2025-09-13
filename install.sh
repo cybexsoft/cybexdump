@@ -63,7 +63,15 @@ if [ $? -ne 0 ]; then
 fi
 
 # Navigate to the package directory
-cd cybexdump-main || {
+cd cybexdump-main
+
+# Ensure correct package structure
+if [ -d "src" ]; then
+    echo -e "${YELLOW}Updating package structure...${NC}"
+    mkdir -p cybexdump
+    cp -r src/* cybexdump/
+    rm -rf src
+fi || {
     echo -e "${RED}Failed to find package directory.${NC}"
     exit 1
 }
